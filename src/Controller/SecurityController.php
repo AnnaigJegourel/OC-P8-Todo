@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -10,7 +10,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/login", name="login")
+     * @Route(path="/login", name="login")
      */
     public function loginAction(AuthenticationUtils $authenticationUtils): Response
     {
@@ -30,7 +30,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/login_check", name="login_check")
+     * @Route(path="/login_check", name="login_check")
      */
     public function loginCheck()
     {
@@ -38,7 +38,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/logout", name="logout")
+     * @Route(path="/logout", name="logout")
      */
     public function logoutCheck()
     {

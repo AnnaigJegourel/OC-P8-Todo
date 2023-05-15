@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -13,7 +13,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/users", name="user_list")
+     * @Route(path="/users", name="user_list")
      */
     public function listAction(UserRepository $userRepository)
     {
@@ -23,7 +23,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/users/create", name="user_create")
+     * @Route(path="/users/create", name="user_create")
      */
     public function createAction(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher)
     {
@@ -51,7 +51,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/users/{id}/edit", name="user_edit")
+     * @Route(path="/users/{id}/edit", name="user_edit")
      */
     public function editAction(User $user, Request $request, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher)
     {
