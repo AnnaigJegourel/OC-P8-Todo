@@ -11,19 +11,32 @@ use Symfony\Component\HttpFoundation\Request;
 
 class TaskController extends AbstractController
 {
-    /**
-     * @Route(path="/tasks", name="task_list")
-     */
+    // condition: connecté / role user
+    #[Route(path: "/tasks", name: "task_list")]
     public function listAction(TaskRepository $taskRepository)
     {
         return $this->render('task/list.html.twig', [
-            'tasks' => $taskRepository->findAll()
+            'tasks' => $taskRepository->findBy([
+                // 'author' => $this->getUser(),
+                'isDone' => 0
+            ])
         ]);
     }
 
-    /**
-     * @Route(path="/tasks/create", name="task_create")
-     */
+    // condition: connecté / role user
+    #[Route("/tasks/done", name: "task_done")]
+    public function listDoneAction(TaskRepository $taskRepository)
+    {
+        return $this->render('task/list.html.twig', [
+            'tasks' => $taskRepository->findBy([
+                // 'author' => $this->getUser(),
+                'isDone' => 1
+            ])
+        ]);
+    }
+
+    // condition: connecté / role user
+    #[Route(path: "/tasks/create", name: "task_create")]
     public function createAction(Request $request, TaskRepository $taskRepository)
     {
         $task = new Task();
@@ -32,8 +45,10 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $taskRepository->save($task, true);
 
+            $task->setAuthor($this->getUser());
+            
+            $taskRepository->save($task, true);
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
 
             return $this->redirectToRoute('task_list');
@@ -42,14 +57,18 @@ class TaskController extends AbstractController
         return $this->render('task/create.html.twig', ['form' => $form->createView()]);
     }
 
-    /**
-     * @Route(path="/tasks/{id}/edit", name="task_edit")
-     */
+    #[Route(path: "/tasks/{id}/edit", name: "task_edit")]
     public function editAction(Task $task, Request $request, TaskRepository $taskRepository)
     {
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
+
+        if ($task->getAuthor() !== $this->getUser()) {
+            $this->addFlash('error', 'Vous ne pouvez modifier que vos propres tâches.');
+
+            return $this->redirectToRoute('homepage');
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $taskRepository->save($task, true);
@@ -65,11 +84,15 @@ class TaskController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route(path="/tasks/{id}/toggle", name="task_toggle")
-     */
+    #[Route(path: "/tasks/{id}/toggle", name: "task_toggle")]
     public function toggleTaskAction(Task $task, TaskRepository $taskRepository)
     {
+        if ($task->getAuthor() !== $this->getUser()) {
+            $this->addFlash('error', 'Vous ne pouvez modifier que vos propres tâches.');
+
+            return $this->redirectToRoute('homepage');
+        }
+
         $task->toggle(!$task->isDone());
         $taskRepository->save($task, true);
 
@@ -78,11 +101,15 @@ class TaskController extends AbstractController
         return $this->redirectToRoute('task_list');
     }
 
-    /**
-     * @Route(path="/tasks/{id}/delete", name="task_delete")
-     */
+    #[Route(path: "/tasks/{id}/delete", name: "task_delete")]
     public function deleteTaskAction(Task $task, TaskRepository $taskRepository)
     {
+        if ($task->getAuthor() !== $this->getUser()) {
+            $this->addFlash('error', 'Vous ne pouvez supprimer que vos propres tâches.');
+
+            return $this->redirectToRoute('homepage');
+        }
+
         $taskRepository->remove($task, true);
 
         $this->addFlash('success', 'La tâche a bien été supprimée.');
