@@ -15,7 +15,9 @@ class TaskController extends AbstractController
     public function listAction(TaskRepository $taskRepository)
     {
         return $this->render('task/list.html.twig', [
-            'tasks' => $taskRepository->findAll()
+            'tasks' => $taskRepository->findBy([
+                'author' => $this->getUser()
+            ])
         ]);
     }
 
