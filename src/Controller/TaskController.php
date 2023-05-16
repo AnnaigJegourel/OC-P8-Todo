@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class TaskController extends AbstractController
 {
+    // condition: connecté / role user
     #[Route(path: "/tasks", name: "task_list")]
     public function listAction(TaskRepository $taskRepository)
     {
@@ -22,6 +23,7 @@ class TaskController extends AbstractController
         ]);
     }
 
+    // condition: connecté / role user
     #[Route("/tasks/done", name: "task_done")]
     public function listDoneAction(TaskRepository $taskRepository)
     {
@@ -33,6 +35,7 @@ class TaskController extends AbstractController
         ]);
     }
 
+    // condition: connecté / role user
     #[Route(path: "/tasks/create", name: "task_create")]
     public function createAction(Request $request, TaskRepository $taskRepository)
     {
@@ -61,6 +64,12 @@ class TaskController extends AbstractController
 
         $form->handleRequest($request);
 
+        if ($task->getAuthor() !== $this->getUser()) {
+            $this->addFlash('error', 'Vous ne pouvez modifier que vos propres tâches.');
+
+            return $this->redirectToRoute('homepage');
+        }
+
         if ($form->isSubmitted() && $form->isValid()) {
             $taskRepository->save($task, true);
 
@@ -78,6 +87,12 @@ class TaskController extends AbstractController
     #[Route(path: "/tasks/{id}/toggle", name: "task_toggle")]
     public function toggleTaskAction(Task $task, TaskRepository $taskRepository)
     {
+        if ($task->getAuthor() !== $this->getUser()) {
+            $this->addFlash('error', 'Vous ne pouvez modifier que vos propres tâches.');
+
+            return $this->redirectToRoute('homepage');
+        }
+
         $task->toggle(!$task->isDone());
         $taskRepository->save($task, true);
 
@@ -89,6 +104,12 @@ class TaskController extends AbstractController
     #[Route(path: "/tasks/{id}/delete", name: "task_delete")]
     public function deleteTaskAction(Task $task, TaskRepository $taskRepository)
     {
+        if ($task->getAuthor() !== $this->getUser()) {
+            $this->addFlash('error', 'Vous ne pouvez supprimer que vos propres tâches.');
+
+            return $this->redirectToRoute('homepage');
+        }
+
         $taskRepository->remove($task, true);
 
         $this->addFlash('success', 'La tâche a bien été supprimée.');
