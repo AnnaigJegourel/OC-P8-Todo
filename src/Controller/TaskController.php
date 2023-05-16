@@ -28,8 +28,10 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $taskRepository->save($task, true);
 
+            $task->setAuthor($this->getUser());
+            
+            $taskRepository->save($task, true);
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
 
             return $this->redirectToRoute('task_list');
