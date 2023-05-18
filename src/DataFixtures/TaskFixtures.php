@@ -3,12 +3,11 @@
 namespace App\DataFixtures;
 
 use App\Entity\Task;
-use App\Entity\User;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class TaskFixtures extends Fixture
+class TaskFixtures extends Fixture implements DependentFixtureInterface
 {
     /**
      * Load the fixtures
@@ -34,5 +33,12 @@ class TaskFixtures extends Fixture
         }
 
         $manager->flush();
+    }
+
+    public function getDependencies()
+    {
+        return [
+            UserFixtures::class,
+        ];
     }
 }
