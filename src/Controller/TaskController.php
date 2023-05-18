@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Task;
 use App\Form\TaskType;
 use App\Repository\TaskRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,12 +13,12 @@ use Symfony\Component\HttpFoundation\Request;
 class TaskController extends AbstractController
 {
     // condition: connecté / role user
+    // #[IsGranted('IS_AUTHENTICATED')]
     #[Route(path: "/tasks", name: "task_list")]
     public function listAction(TaskRepository $taskRepository)
     {
         return $this->render('task/list.html.twig', [
             'tasks' => $taskRepository->findBy([
-                // 'author' => $this->getUser(),
                 'isDone' => 0
             ])
         ]);
@@ -58,17 +59,18 @@ class TaskController extends AbstractController
     }
 
     #[Route(path: "/tasks/{id}/edit", name: "task_edit")]
+    #[IsGranted('TASK_MODIFY', subject: 'task')]
     public function editAction(Task $task, Request $request, TaskRepository $taskRepository)
     {
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
 
-        if ($task->getAuthor() !== $this->getUser()) {
-            $this->addFlash('error', 'Vous ne pouvez modifier que vos propres tâches.');
+        // if ($task->getAuthor() !== $this->getUser()) {
+        //     $this->addFlash('error', 'Vous ne pouvez modifier que vos propres tâches.');
 
-            return $this->redirectToRoute('homepage');
-        }
+        //     return $this->redirectToRoute('homepage');
+        // }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $taskRepository->save($task, true);
@@ -85,13 +87,14 @@ class TaskController extends AbstractController
     }
 
     #[Route(path: "/tasks/{id}/toggle", name: "task_toggle")]
+    #[IsGranted('TASK_MODIFY', subject: 'task')]
     public function toggleTaskAction(Task $task, TaskRepository $taskRepository)
     {
-        if ($task->getAuthor() !== $this->getUser()) {
-            $this->addFlash('error', 'Vous ne pouvez modifier que vos propres tâches.');
+        // if ($task->getAuthor() !== $this->getUser()) {
+        //     $this->addFlash('error', 'Vous ne pouvez modifier que vos propres tâches.');
 
-            return $this->redirectToRoute('homepage');
-        }
+        //     return $this->redirectToRoute('homepage');
+        // }
 
         $task->toggle(!$task->isDone());
         $taskRepository->save($task, true);
@@ -102,13 +105,14 @@ class TaskController extends AbstractController
     }
 
     #[Route(path: "/tasks/{id}/delete", name: "task_delete")]
+    #[IsGranted('TASK_MODIFY', subject: 'task')]
     public function deleteTaskAction(Task $task, TaskRepository $taskRepository)
     {
-        if ($task->getAuthor() !== $this->getUser()) {
-            $this->addFlash('error', 'Vous ne pouvez supprimer que vos propres tâches.');
+        // if ($task->getAuthor() !== $this->getUser()) {
+        //     $this->addFlash('error', 'Vous ne pouvez supprimer que vos propres tâches.');
 
-            return $this->redirectToRoute('homepage');
-        }
+        //     return $this->redirectToRoute('homepage');
+        // }
 
         $taskRepository->remove($task, true);
 
