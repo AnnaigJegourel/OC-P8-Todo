@@ -18,16 +18,19 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
      */
     public function load(ObjectManager $manager): void
     {
+        // Load 15 fixtures
         for ($i = 0; $i < 15; $i++) {
             $task = new Task;
 
             $task->setCreatedAt(new \DateTime());
             $task->setTitle('Task'.$i);
             $task->setContent('This is the description of task'.$i);
-            if($i < 5) {
-                $task->toggle(1);
+
+            // The last 5 tasks have an author.
+            if($i > 5) {
+                $random = rand(0, 4);
+                $task->setAuthor($this->getReference('user'.$random));    
             }
-            // $task->setAuthor($user);
 
             $manager->persist($task);
         }

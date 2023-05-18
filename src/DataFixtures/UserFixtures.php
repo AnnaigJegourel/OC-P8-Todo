@@ -2,7 +2,6 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Task;
 use App\Entity\User;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -10,8 +9,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends Fixture
 {
-    public const ADMIN_USER_REFERENCE = 'admin-user';
-
     /**
      * Hash password
      *
@@ -48,7 +45,7 @@ class UserFixtures extends Fixture
 
         $manager->persist($user);
 
-        // Load users.
+        // Load 5 users.
         for ($i = 0; $i < 5; $i++) {
             $user = new User;
 
@@ -56,6 +53,8 @@ class UserFixtures extends Fixture
             $user->setPassword($this->userPasswordHasher->hashPassword($user, 'password-'.$i));
             $user->setEmail('user-'.$i.'@email.com');
             $user->setRoles(['ROLE_USER']);
+
+            $this->addReference('user'.$i, $user);
 
             $manager->persist($user);
         }
