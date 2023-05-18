@@ -35,6 +35,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Task::class)]
     private Collection $tasks;
 
+    #[ORM\Column(type: 'json')]
+    // private array $roles = [];
+    private array $roles;
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
@@ -83,11 +87,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->email = $email;
     }
 
-    public function getRoles()
-    {
-        return array('ROLE_USER');
-    }
-
     public function eraseCredentials()
     {
     }
@@ -130,6 +129,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $task->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     *
+     * @return array
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
 
         return $this;
     }
