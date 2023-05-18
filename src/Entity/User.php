@@ -36,7 +36,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $tasks;
 
     #[ORM\Column(type: 'json')]
-    private array $roles = [];
+    // private array $roles = [];
+    private array $roles;
 
     public function __construct()
     {
