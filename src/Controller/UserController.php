@@ -29,12 +29,21 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // dd($form->get('roles')->getData());
+            // dd($user);
             $plaintextPassword = $form->get('password')->getData();
             $hashedPassword = $passwordHasher->hashPassword(
                 $user,
                 $plaintextPassword
             );
             $user->setPassword($hashedPassword);
+            // dd($user);
+
+            // dd($form->get('roles')->getData());
+            $roles = [$form->get('roles')->getData()];
+            // dd($roles);
+            $user->setRoles($roles);
+            // dd($user);
 
             $userRepository->save($user, true);
 
