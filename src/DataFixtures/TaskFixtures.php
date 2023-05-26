@@ -29,7 +29,7 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
             // The last 5 tasks have an author.
             if($i > 5) {
                 $random = rand(0, 4);
-                $task->setAuthor($this->getReference('user'.$random));    
+                $task->setAuthor($this->getReference('user'.$random));
             }
 
             $manager->persist($task);
