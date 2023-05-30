@@ -43,6 +43,16 @@ class TaskControllerTest extends WebTestCase
         $this->assertResponseStatusCodeSame(200);
     }
 
-    // routes à tester 200: task_done, task_create, task_edit, task_toggle, task_delete
+    public function testCreatePageIsUpWhileLoggedIn(): void
+    {
+        $this->client->loginUser($this->testUser);
+
+        $urlGenerator = $this->client->getContainer()->get('router.default');
+        $crawler = $this->client->request('GET', $urlGenerator->generate('task_create'));
+
+        $this->assertResponseStatusCodeSame(200);
+    }
+
+    // routes avec ID à tester 200: task_edit, task_toggle, task_delete
     // tester les formulaires
 }
