@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class TaskControllerTest extends WebTestCase
 {
+
     private KernelBrowser|null $client = null;
     private $testUser;
     private $testTaskId;
@@ -18,13 +19,17 @@ class TaskControllerTest extends WebTestCase
 
         // Use the user repository.
         $userRepository = static::getContainer()->get(UserRepository::class);
+
         // Fetch the test user.
         $this->testUser = $userRepository->findOneByUsername('User-4');
         $this->testTaskId = $this->testUser->getTasks()->first()->getId();
+
     }
+
 
     public function testTodoListPageIsUpWhileLoggedIn(): void
     {        
+
         // Simulate $testUser being logged in.
         $this->client->loginUser($this->testUser);
 
@@ -32,7 +37,9 @@ class TaskControllerTest extends WebTestCase
         $this->client->request('GET', $urlGenerator->generate('task_list'));
 
         $this->assertResponseStatusCodeSame(200);
+
     }
+
 
     public function testDoneListPageIsUpWhileLoggedIn(): void
     {
@@ -42,10 +49,13 @@ class TaskControllerTest extends WebTestCase
         $this->client->request('GET', $urlGenerator->generate('task_list'));
 
         $this->assertResponseStatusCodeSame(200);
+
     }
+
 
     public function testCreateTaskFormWhileLoggedIn()
     {
+
         // Create page is up.
         $this->client->loginUser($this->testUser);
 
@@ -61,10 +71,13 @@ class TaskControllerTest extends WebTestCase
         $this->client->submit($form);
         $this->client->followRedirect();
         $this->assertSelectorTextContains('div.alert.alert-success','Superbe !');
+
     }
+
 
     public function testEditTaskFormForAuthor(): void
     {
+
         // Edit page is up.
         $this->client->loginUser($this->testUser);
         $crawler = $this->client->request('GET', '/tasks/'.$this->testTaskId.'/edit');
@@ -77,7 +90,9 @@ class TaskControllerTest extends WebTestCase
         $this->client->submit($form);
         $this->client->followRedirect();
         $this->assertSelectorTextContains('div.alert.alert-success','Superbe !');
+
     }
+
 
     public function testToggleRedirect(): void
     {
@@ -87,7 +102,9 @@ class TaskControllerTest extends WebTestCase
 
         $this->client->followRedirect();
         $this->assertResponseIsSuccessful();
+
     }
+
 
     public function testDeleteTaskRedirect(): void
     {
@@ -97,6 +114,8 @@ class TaskControllerTest extends WebTestCase
 
         $this->client->followRedirect();
         $this->assertResponseIsSuccessful();
+
     }
+
 
 }

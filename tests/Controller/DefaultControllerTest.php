@@ -14,5 +14,8 @@ class DefaultControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Bienvenue sur Todo List');
         $this->assertResponseStatusCodeSame(200);
+
     }
+
+
 }

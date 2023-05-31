@@ -8,6 +8,7 @@ class SecurityControllerTest extends WebTestCase
 {
     public function testLoginFormSuccessful(): void
     {
+
         // Form page is up.
         $client = static::createClient();
         $crawler = $client->request('GET', '/login');
@@ -21,5 +22,8 @@ class SecurityControllerTest extends WebTestCase
         $client->submit($form);
         $client->followRedirect();
         $this->assertRouteSame('homepage');
+
     }
+
+
 }
