@@ -24,7 +24,7 @@ class UserControllerTest extends WebTestCase
         $this->client->loginUser($this->testAdmin);
 
         $urlGenerator = $this->client->getContainer()->get('router.default');
-        $crawler = $this->client->request('GET', $urlGenerator->generate('user_list'));
+        $this->client->request('GET', $urlGenerator->generate('user_list'));
 
         $this->assertResponseStatusCodeSame(200);
     }

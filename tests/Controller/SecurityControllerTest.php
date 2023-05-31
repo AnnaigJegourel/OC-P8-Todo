@@ -22,6 +22,4 @@ class SecurityControllerTest extends WebTestCase
         $client->followRedirect();
         $this->assertRouteSame('homepage');
     }
-
-    // tester logout, login_check?!
 }

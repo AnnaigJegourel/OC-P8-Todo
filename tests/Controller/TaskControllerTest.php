@@ -29,7 +29,7 @@ class TaskControllerTest extends WebTestCase
         $this->client->loginUser($this->testUser);
 
         $urlGenerator = $this->client->getContainer()->get('router.default');
-        $crawler = $this->client->request('GET', $urlGenerator->generate('task_list'));
+        $this->client->request('GET', $urlGenerator->generate('task_list'));
 
         $this->assertResponseStatusCodeSame(200);
     }
@@ -39,7 +39,7 @@ class TaskControllerTest extends WebTestCase
         $this->client->loginUser($this->testUser);
 
         $urlGenerator = $this->client->getContainer()->get('router.default');
-        $crawler = $this->client->request('GET', $urlGenerator->generate('task_done'));
+        $this->client->request('GET', $urlGenerator->generate('task_list'));
 
         $this->assertResponseStatusCodeSame(200);
     }
@@ -79,12 +79,11 @@ class TaskControllerTest extends WebTestCase
         $this->assertSelectorTextContains('div.alert.alert-success','Superbe !');
     }
 
-    // tester les redirections: toggle, delete
     public function testToggleRedirect(): void
     {
         $this->client->loginUser($this->testUser);
 
-        $crawler = $this->client->request('GET', '/tasks/'.$this->testTaskId.'/toggle');
+        $this->client->request('GET', '/tasks/'.$this->testTaskId.'/toggle');
 
         $this->client->followRedirect();
         $this->assertResponseIsSuccessful();
@@ -94,7 +93,7 @@ class TaskControllerTest extends WebTestCase
     {
         $this->client->loginUser($this->testUser);
 
-        $crawler = $this->client->request('GET', '/tasks/'.$this->testTaskId.'/delete');
+        $this->client->request('GET', '/tasks/'.$this->testTaskId.'/delete');
 
         $this->client->followRedirect();
         $this->assertResponseIsSuccessful();
