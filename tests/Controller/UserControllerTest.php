@@ -43,7 +43,7 @@ class UserControllerTest extends WebTestCase
     {
         $this->client->loginUser($this->testAdmin);
 
-        $crawler = $this->client->request('GET', '/tasks/1/edit');
+        $crawler = $this->client->request('GET', '/users/1/edit');
 
         $this->assertResponseStatusCodeSame(200);
     }
