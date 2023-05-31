@@ -20,12 +20,13 @@ class UserController extends AbstractController
         ]);
     }
 
+
     #[Route(path: "/users/create", name: "user_create")]
     public function createAction(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher)
     {
+
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -40,20 +41,20 @@ class UserController extends AbstractController
             $user->setRoles($roles);
 
             $userRepository->save($user, true);
-
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");
 
             return $this->redirectToRoute('user_list');
         }
 
         return $this->render('user/create.html.twig', ['form' => $form->createView()]);
+
     }
+
 
     #[Route(path: "/users/{id}/edit", name: "user_edit")]
     public function editAction(User $user, Request $request, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher)
     {
         $form = $this->createForm(UserType::class, $user);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -68,12 +69,14 @@ class UserController extends AbstractController
             $user->setRoles($roles);
 
             $userRepository->save($user, true);
-
             $this->addFlash('success', "L'utilisateur a bien été modifié");
 
             return $this->redirectToRoute('user_list');
         }
 
         return $this->render('user/edit.html.twig', ['form' => $form->createView(), 'user' => $user]);
+
     }
+
+
 }
