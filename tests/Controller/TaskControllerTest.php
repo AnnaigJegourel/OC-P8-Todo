@@ -10,6 +10,7 @@ class TaskControllerTest extends WebTestCase
 {
     private KernelBrowser|null $client = null;
     private $testUser;
+    private $testTaskId;
 
     public function setUp(): void
     {
@@ -19,6 +20,7 @@ class TaskControllerTest extends WebTestCase
         $userRepository = static::getContainer()->get(UserRepository::class);
         // Fetch the test user.
         $this->testUser = $userRepository->findOneByUsername('User-4');
+        $this->testTaskId = $this->testUser->getTasks()->first()->getId();
     }
 
     public function testTodoListPageIsUpWhileLoggedIn(): void
@@ -52,15 +54,34 @@ class TaskControllerTest extends WebTestCase
         $this->assertResponseStatusCodeSame(200);
     }
 
-    public function testEditPageIsUp(): void
+    public function testEditPageIsUpForAuthor(): void
     {
         $this->client->loginUser($this->testUser);
-        $testTaskId = $this->testUser->getTasks()->first()->getId();
 
-        $crawler = $this->client->request('GET', '/tasks/'.$testTaskId.'/edit');
+        $crawler = $this->client->request('GET', '/tasks/'.$this->testTaskId.'/edit');
 
         $this->assertResponseStatusCodeSame(200);
     }
 
-    // tester les formulaires
+    // tester les redirections: toggle, delete
+    public function testToggleRedirect(): void
+    {
+        $this->client->loginUser($this->testUser);
+
+        $crawler = $this->client->request('GET', '/tasks/'.$this->testTaskId.'/toggle');
+
+        $this->client->followRedirect();
+        $this->assertResponseIsSuccessful();
+    }
+
+    public function testDeleteRedirect(): void
+    {
+        $this->client->loginUser($this->testUser);
+
+        $crawler = $this->client->request('GET', '/tasks/'.$this->testTaskId.'/delete');
+
+        $this->client->followRedirect();
+        $this->assertResponseIsSuccessful();
+    }
+
 }
