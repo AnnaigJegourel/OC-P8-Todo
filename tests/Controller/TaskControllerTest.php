@@ -2,7 +2,6 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\User;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -19,7 +18,7 @@ class TaskControllerTest extends WebTestCase
         // Use the user repository.
         $userRepository = static::getContainer()->get(UserRepository::class);
         // Fetch the test user.
-        $this->testUser = $userRepository->findOneByUsername('User-0');
+        $this->testUser = $userRepository->findOneByUsername('User-4');
     }
 
     public function testTodoListPageIsUpWhileLoggedIn(): void
@@ -53,6 +52,15 @@ class TaskControllerTest extends WebTestCase
         $this->assertResponseStatusCodeSame(200);
     }
 
-    // routes avec ID à tester 200: task_edit, task_toggle, task_delete
+    public function testEditPageIsUp(): void
+    {
+        $this->client->loginUser($this->testUser);
+        $testTaskId = $this->testUser->getTasks()->first()->getId();
+
+        $crawler = $this->client->request('GET', '/tasks/'.$testTaskId.'/edit');
+
+        $this->assertResponseStatusCodeSame(200);
+    }
+
     // tester les formulaires
 }
