@@ -39,5 +39,12 @@ class UserControllerTest extends WebTestCase
         $this->assertResponseStatusCodeSame(200);
     }
 
-    // with logged in as admin & with ID: user_edit (editAction())
+    public function testEditPageIsUpForAdmin(): void
+    {
+        $this->client->loginUser($this->testAdmin);
+
+        $crawler = $this->client->request('GET', '/tasks/1/edit');
+
+        $this->assertResponseStatusCodeSame(200);
+    }
 }
