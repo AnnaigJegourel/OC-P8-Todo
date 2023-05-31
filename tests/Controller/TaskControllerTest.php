@@ -44,23 +44,39 @@ class TaskControllerTest extends WebTestCase
         $this->assertResponseStatusCodeSame(200);
     }
 
-    public function testCreatePageIsUpWhileLoggedIn(): void
+    public function testCreateTaskFormWhileLoggedIn()
     {
+        // Create page is up.
         $this->client->loginUser($this->testUser);
 
         $urlGenerator = $this->client->getContainer()->get('router.default');
         $crawler = $this->client->request('GET', $urlGenerator->generate('task_create'));
 
         $this->assertResponseStatusCodeSame(200);
+
+        // Send form.
+        $form = $crawler->selectButton('Ajouter')->form();
+        $form['task[title]'] = 'Faire les pâtes';
+        $form['task[content]'] = 'Avec une inflation pareille, les coquillettes ont de beaux jours devant elles.';
+        $this->client->submit($form);
+        $this->client->followRedirect();
+        $this->assertSelectorTextContains('div.alert.alert-success','Superbe !');
     }
 
-    public function testEditPageIsUpForAuthor(): void
+    public function testEditTaskFormForAuthor(): void
     {
+        // Edit page is up.
         $this->client->loginUser($this->testUser);
-
         $crawler = $this->client->request('GET', '/tasks/'.$this->testTaskId.'/edit');
-
         $this->assertResponseStatusCodeSame(200);
+
+        // Send form.
+        $form = $crawler->selectButton('Modifier')->form();
+        $form['task[title]'] = 'RE-faire les pâtes';
+        $form['task[content]'] = 'Faudrait peut-être se concentrer!';
+        $this->client->submit($form);
+        $this->client->followRedirect();
+        $this->assertSelectorTextContains('div.alert.alert-success','Superbe !');
     }
 
     // tester les redirections: toggle, delete
@@ -74,7 +90,7 @@ class TaskControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
     }
 
-    public function testDeleteRedirect(): void
+    public function testDeleteTaskRedirect(): void
     {
         $this->client->loginUser($this->testUser);
 
