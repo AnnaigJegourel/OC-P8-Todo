@@ -12,20 +12,19 @@ class SecurityController extends AbstractController
     #[Route(path: "/login", name: "login")]
     public function loginAction(AuthenticationUtils $authenticationUtils): Response
     {
-        // dd($this->getUser());
         if ($this->getUser()) {
             return $this->redirectToRoute('homepage');
         }
 
         $error = $authenticationUtils->getLastAuthenticationError();
-        // dd($error);
         $lastUsername = $authenticationUtils->getLastUsername();
-        // dd($lastUsername);
         return $this->render('security/login.html.twig', array(
             'last_username' => $lastUsername,
             'error'         => $error,
         ));
+
     }
+
 
     #[Route(path: "/login_check", name: "login_check")]
     public function loginCheck()
@@ -38,4 +37,6 @@ class SecurityController extends AbstractController
     {
         // This code is never executed.
     }
+
+
 }
