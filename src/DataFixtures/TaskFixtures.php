@@ -18,10 +18,9 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
      */
     public function load(ObjectManager $manager): void
     {
-        // Load 15 fixtures
+        // Load 15 fixtures.
         for ($i = 0; $i < 15; $i++) {
             $task = new Task;
-
             $task->setCreatedAt(new \DateTime());
             $task->setTitle('Task'.$i);
             $task->setContent('This is the description of task'.$i);
@@ -36,7 +35,9 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
         }
 
         $manager->flush();
+
     }
+
 
     public function getDependencies()
     {
@@ -44,4 +45,6 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
             UserFixtures::class,
         ];
     }
+
+
 }

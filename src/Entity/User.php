@@ -36,33 +36,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $tasks;
 
     #[ORM\Column(type: 'json')]
-    // private array $roles = [];
     private array $roles;
+
 
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
     }
 
+
     public function getId()
     {
         return $this->id;
     }
+
 
     public function getUsername(): string
     {
         return $this->username;
     }
 
+
     public function setUsername($username)
     {
         $this->username = $username;
     }
 
+
     public function getSalt(): ?string
     {
         return null;
     }
+
 
     /**
      * @see PasswordAuthenticatedUserInterface
@@ -72,24 +77,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
+
     public function setPassword($password)
     {
         $this->password = $password;
     }
+
 
     public function getEmail()
     {
         return $this->email;
     }
 
+
     public function setEmail($email)
     {
         $this->email = $email;
     }
 
+
     public function eraseCredentials()
     {
     }
+
 
     /**
      * A visual identifier that represents this user.
@@ -103,6 +113,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return (string) $this->username;
     }
 
+
     /**
      * @return Collection<int, Task>
      */
@@ -110,6 +121,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->tasks;
     }
+
 
     public function addTask(Task $task): self
     {
@@ -119,19 +131,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+
     }
+
 
     public function removeTask(Task $task): self
     {
         if ($this->tasks->removeElement($task)) {
-            // set the owning side to null (unless already changed)
+            // Set the owning side to null (unless already changed).
             if ($task->getAuthor() === $this) {
                 $task->setAuthor(null);
             }
         }
 
         return $this;
+
     }
+
 
     /**
      * @see UserInterface
@@ -141,11 +157,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
+        // Guarantee every user at least has ROLE_USER.
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
+
     }
+
 
     public function setRoles(array $roles): self
     {
@@ -153,4 +171,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+
 }

@@ -32,61 +32,73 @@ class Task
     #[ORM\ManyToOne(inversedBy: 'tasks')]
     private ?User $author = null;
 
+
     public function __construct()
     {
         $this->createdAt = new \Datetime();
         $this->isDone = false;
     }
 
+
     public function getId()
     {
         return $this->id;
     }
+
 
     public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
+
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
     }
+
 
     public function getTitle()
     {
         return $this->title;
     }
 
+
     public function setTitle($title)
     {
         $this->title = $title;
     }
+
 
     public function getContent()
     {
         return $this->content;
     }
 
+
     public function setContent($content)
     {
         $this->content = $content;
     }
+
 
     public function isDone()
     {
         return $this->isDone;
     }
 
+
     public function toggle($flag)
     {
         $this->isDone = $flag;
     }
 
+
     public function getAuthor(): ?User
     {
         return $this->author;
     }
+
 
     public function setAuthor(?User $author): self
     {
@@ -94,4 +106,6 @@ class Task
 
         return $this;
     }
+
+
 }

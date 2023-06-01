@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class UserControllerTest extends WebTestCase
 {
+
     private KernelBrowser|null $client = null;
     private $testAdmin;
 
@@ -17,20 +18,25 @@ class UserControllerTest extends WebTestCase
 
         $userRepository = static::getContainer()->get(UserRepository::class);
         $this->testAdmin = $userRepository->findOneByUsername('Admin');
+
     }
+
 
     public function testListPageIsUpForAdmin(): void
     {
         $this->client->loginUser($this->testAdmin);
 
         $urlGenerator = $this->client->getContainer()->get('router.default');
-        $crawler = $this->client->request('GET', $urlGenerator->generate('user_list'));
+        $this->client->request('GET', $urlGenerator->generate('user_list'));
 
         $this->assertResponseStatusCodeSame(200);
+
     }
+
 
     public function testCreateUserFormAsAdmin()
     {
+
         // Create page is up.
         $this->client->loginUser($this->testAdmin);
 
@@ -49,10 +55,13 @@ class UserControllerTest extends WebTestCase
         $this->client->submit($form);
         $this->client->followRedirect();
         $this->assertSelectorTextContains('div.alert.alert-success','Superbe !');
+
     }
+
 
     public function testEditUserFormAsAdmin(): void
     {
+
         // Edit page is up.
         $this->client->loginUser($this->testAdmin);
         $crawler = $this->client->request('GET', '/users/1/edit');
@@ -68,5 +77,8 @@ class UserControllerTest extends WebTestCase
         $this->client->submit($form);
         $this->client->followRedirect();
         $this->assertRouteSame('user_list');
+
     }
+
+
 }
