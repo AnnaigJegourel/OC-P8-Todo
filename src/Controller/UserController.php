@@ -12,15 +12,33 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
 {
+    /**
+     * Display the list of all app users
+     *
+     * @param UserRepository $userRepository
+     * @return void
+     */
     #[Route(path: "/users", name: "user_list")]
     public function listAction(UserRepository $userRepository)
     {
-        return $this->render('user/list.html.twig', [
-            'users' => $userRepository->findAll()
-        ]);
+        return $this->render(
+            'user/list.html.twig', 
+            [
+                'users' => $userRepository->findAll()
+            ]
+        );
+
     }
 
 
+    /**
+     * Manage the form & pages to create a user
+     *
+     * @param Request $request
+     * @param UserRepository $userRepository
+     * @param UserPasswordHasherInterface $passwordHasher
+     * @return void
+     */
     #[Route(path: "/users/create", name: "user_create")]
     public function createAction(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher)
     {
@@ -29,7 +47,7 @@ class UserController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() === true && $form->isValid() === true) {
             $plaintextPassword = $form->get('password')->getData();
             $hashedPassword = $passwordHasher->hashPassword(
                 $user,
@@ -51,13 +69,22 @@ class UserController extends AbstractController
     }
 
 
+    /**
+     * Manage the form & pages to edit a user profile
+     *
+     * @param User $user
+     * @param Request $request
+     * @param UserRepository $userRepository
+     * @param UserPasswordHasherInterface $passwordHasher
+     * @return void
+     */
     #[Route(path: "/users/{id}/edit", name: "user_edit")]
     public function editAction(User $user, Request $request, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher)
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() === true && $form->isValid() === true) {
             $plaintextPassword = $form->get('password')->getData();
             $hashedPassword = $passwordHasher->hashPassword(
                 $user,
