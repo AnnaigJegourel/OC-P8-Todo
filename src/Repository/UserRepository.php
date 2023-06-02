@@ -30,8 +30,8 @@ class UserRepository extends ServiceEntityRepository
     /**
      * Save the User object to the database
      *
-     * @param User $entity   param
-     * @param boolean $flush param
+     * @param User    $entity param
+     * @param boolean $flush  param
      *
      * @return void
      */
@@ -49,8 +49,8 @@ class UserRepository extends ServiceEntityRepository
     /**
      * Delete the User object from the database
      *
-     * @param User $entity   param
-     * @param boolean $flush param
+     * @param User    $entity param
+     * @param boolean $flush  param
      *
      * @return void
      */

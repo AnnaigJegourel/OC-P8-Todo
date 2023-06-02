@@ -30,8 +30,8 @@ class TaskRepository extends ServiceEntityRepository
     /**
      * Save the Task object to the database
      *
-     * @param Task $entity   param
-     * @param boolean $flush param
+     * @param Task    $entity param
+     * @param boolean $flush  param
      *
      * @return void
      */
@@ -48,8 +48,8 @@ class TaskRepository extends ServiceEntityRepository
     /**
      * Delete the Task object from the database
      *
-     * @param Task $entity   param
-     * @param boolean $flush param
+     * @param Task    $entity param
+     * @param boolean $flush  param
      *
      * @return void
      */
