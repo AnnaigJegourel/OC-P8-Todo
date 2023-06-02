@@ -34,8 +34,8 @@ class UserController extends AbstractController
     /**
      * Manage the form & pages to create a user
      *
-     * @param Request $request param
-     * @param UserRepository $userRepositoryn param
+     * @param Request                     $request param
+     * @param UserRepository              $userRepositoryn param
      * @param UserPasswordHasherInterface $passwordHasher param
      * @return void
      */
@@ -72,9 +72,9 @@ class UserController extends AbstractController
     /**
      * Manage the form & pages to edit a user profile
      *
-     * @param User $user param
-     * @param Request $request param
-     * @param UserRepository $userRepository param
+     * @param User                        $user param
+     * @param Request                     $request param
+     * @param UserRepository              $userRepository param
      * @param UserPasswordHasherInterface $passwordHasher param
      * @return void
      */
