@@ -10,7 +10,9 @@ class UserControllerTest extends WebTestCase
 {
 
     private KernelBrowser|null $client = null;
+
     private $testAdmin;
+
 
     public function setUp(): void
     {
@@ -67,7 +69,7 @@ class UserControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', '/users/1/edit');
         $this->assertResponseStatusCodeSame(200);
 
-        //Send form.
+        // Send form.
         $form = $crawler->selectButton('Modifier')->form();
         $form['user[username]'] = 'RE-TestUser';
         $form['user[password][first]'] = 'RE-test-password';
