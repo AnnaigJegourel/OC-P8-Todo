@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table]
 class Task
 {
+
     #[ORM\Column(type:"integer")]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy:"AUTO")]
@@ -37,66 +38,77 @@ class Task
     {
         $this->createdAt = new \Datetime();
         $this->isDone = false;
+
     }
 
 
     public function getId()
     {
         return $this->id;
+
     }
 
 
     public function getCreatedAt()
     {
         return $this->createdAt;
+
     }
 
 
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+
     }
 
 
     public function getTitle()
     {
         return $this->title;
+
     }
 
 
     public function setTitle($title)
     {
         $this->title = $title;
+
     }
 
 
     public function getContent()
     {
         return $this->content;
+
     }
 
 
     public function setContent($content)
     {
         $this->content = $content;
+
     }
 
 
     public function isDone()
     {
         return $this->isDone;
+
     }
 
 
     public function toggle($flag)
     {
         $this->isDone = $flag;
+
     }
 
 
     public function getAuthor(): ?User
     {
         return $this->author;
+
     }
 
 
@@ -105,6 +117,7 @@ class Task
         $this->author = $author;
 
         return $this;
+
     }
 
 
