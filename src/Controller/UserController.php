@@ -16,6 +16,7 @@ class UserController extends AbstractController
      * Display the list of all app users
      *
      * @param UserRepository $userRepository param
+     *
      * @return void
      */
     #[Route(path: "/users", name: "user_list")]
@@ -34,9 +35,10 @@ class UserController extends AbstractController
     /**
      * Manage the form & pages to create a user
      *
-     * @param Request                     $request param
+     * @param Request                     $request         param
      * @param UserRepository              $userRepositoryn param
-     * @param UserPasswordHasherInterface $passwordHasher param
+     * @param UserPasswordHasherInterface $passwordHasher  param
+     *
      * @return void
      */
     #[Route(path: "/users/create", name: "user_create")]
@@ -72,10 +74,11 @@ class UserController extends AbstractController
     /**
      * Manage the form & pages to edit a user profile
      *
-     * @param User                        $user param
-     * @param Request                     $request param
+     * @param User                        $user           param
+     * @param Request                     $request        param
      * @param UserRepository              $userRepository param
      * @param UserPasswordHasherInterface $passwordHasher param
+     *
      * @return void
      */
     #[Route(path: "/users/{id}/edit", name: "user_edit")]
