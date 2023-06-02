@@ -15,14 +15,14 @@ class UserController extends AbstractController
     /**
      * Display the list of all app users
      *
-     * @param UserRepository $userRepository
+     * @param UserRepository $userRepository param
      * @return void
      */
     #[Route(path: "/users", name: "user_list")]
     public function listAction(UserRepository $userRepository)
     {
         return $this->render(
-            'user/list.html.twig', 
+            'user/list.html.twig',
             [
                 'users' => $userRepository->findAll()
             ]
@@ -34,9 +34,9 @@ class UserController extends AbstractController
     /**
      * Manage the form & pages to create a user
      *
-     * @param Request $request
-     * @param UserRepository $userRepository
-     * @param UserPasswordHasherInterface $passwordHasher
+     * @param Request $request param
+     * @param UserRepository $userRepositoryn param
+     * @param UserPasswordHasherInterface $passwordHasher param
      * @return void
      */
     #[Route(path: "/users/create", name: "user_create")]
@@ -72,10 +72,10 @@ class UserController extends AbstractController
     /**
      * Manage the form & pages to edit a user profile
      *
-     * @param User $user
-     * @param Request $request
-     * @param UserRepository $userRepository
-     * @param UserPasswordHasherInterface $passwordHasher
+     * @param User $user param
+     * @param Request $request param
+     * @param UserRepository $userRepository param
+     * @param UserPasswordHasherInterface $passwordHasher param
      * @return void
      */
     #[Route(path: "/users/{id}/edit", name: "user_edit")]
