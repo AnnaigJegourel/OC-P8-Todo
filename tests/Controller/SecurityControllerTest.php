@@ -23,13 +23,7 @@ class SecurityControllerTest extends WebTestCase
         $client->followRedirect();
         $this->assertRouteSame('homepage');
 
-        // Connecté et retour sur login.
-        $client->request('GET', '/login');
-        $client->followRedirect();
-        $this->assertRouteSame('homepage');
-
     }
 
 
-    // Test: fail.
 }

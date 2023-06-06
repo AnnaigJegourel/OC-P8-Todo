@@ -25,8 +25,8 @@ class UserFixtures extends Fixture
      */
     public function __construct(UserPasswordHasherInterface $userPasswordHasher)
     {
-
         $this->userPasswordHasher = $userPasswordHasher;
+
     }
 
 

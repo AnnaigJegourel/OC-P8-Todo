@@ -47,7 +47,7 @@ class TaskVoter extends Voter
                 }
 
                 // Une tâche sans auteur (affiché 'anonyme') peut être modifiée uniquement par un/e admin.
-                if ($subject->getAuthor() === null && $this->security->isGranted('ROLE_ADMIN')) {
+                if ($subject->getAuthor() === null && $this->security->isGranted('ROLE_ADMIN') === true) {
                     return true;
                 }
                 break;

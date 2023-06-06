@@ -91,6 +91,11 @@ class Task
     }
 
 
+    /**
+     * Return the task state (done or to do)
+     *
+     * @return boolean
+     */
     public function isDone()
     {
         return $this->isDone;
@@ -98,6 +103,13 @@ class Task
     }
 
 
+    /**
+     * Change the task state (done <--> to do)
+     *
+     * @param boolean $flag param
+     *
+     * @return void
+     */
     public function toggle($flag)
     {
         $this->isDone = $flag;
