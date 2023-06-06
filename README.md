@@ -2,8 +2,9 @@
 
 Training program "Back-end Developer: PHP/Symfony" (OpenClassrooms)  
 Project 8: Upgrade an existing project
-Improving the MVP of a start-up (study project): upgrade &amp; fix code, implement authorizations &amp; automated tests ➡️
- <https://openclassrooms.com/projects/ameliorer-un-projet-existant-1>
+Improving the MVP of a start-up (study project): upgrade &amp; fix code, implement authorizations &amp; automated tests 
+➡️ The mission: <https://openclassrooms.com/projects/ameliorer-un-projet-existant-1>
+➡️ The MVP: https://github.com/saro0h/projet8-TodoList
 
 🚧 Work in progress!
 
