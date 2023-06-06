@@ -19,7 +19,7 @@ class TaskTest extends TestCase
 
     public function testisDone()
     {
-        $task = new Task; // constructeur: $isDone = false
+        $task = new Task;
         $this->assertSame(false, $task->isDone());
 
     }

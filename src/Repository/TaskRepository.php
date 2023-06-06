@@ -19,18 +19,20 @@ class TaskRepository extends ServiceEntityRepository
     /**
      * Task object constructor
      *
-     * @param ManagerRegistry $registry
+     * @param ManagerRegistry $registry param
      */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Task::class);
+
     }
 
     /**
      * Save the Task object to the database
      *
-     * @param Task $entity
-     * @param boolean $flush
+     * @param Task    $entity param
+     * @param boolean $flush  param
+     *
      * @return void
      */
     public function save(Task $entity, bool $flush = false): void
@@ -40,13 +42,15 @@ class TaskRepository extends ServiceEntityRepository
         if ($flush === true) {
             $this->getEntityManager()->flush();
         }
+
     }
 
     /**
      * Delete the Task object from the database
      *
-     * @param Task $entity
-     * @param boolean $flush
+     * @param Task    $entity param
+     * @param boolean $flush  param
+     *
      * @return void
      */
     public function remove(Task $entity, bool $flush = false): void
@@ -56,30 +60,8 @@ class TaskRepository extends ServiceEntityRepository
         if ($flush === true) {
             $this->getEntityManager()->flush();
         }
+
     }
 
-//    /**
-//     * @return Task[] Returns an array of Task objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('t.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
 
-//    public function findOneBySomeField($value): ?Task
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

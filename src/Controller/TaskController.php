@@ -15,14 +15,15 @@ class TaskController extends AbstractController
     /**
      * Display the list of tasks that must be done
      *
-     * @param TaskRepository $taskRepository
+     * @param TaskRepository $taskRepository param
+     *
      * @return void
      */
     #[Route(path: "/tasks", name: "task_list")]
     public function listAction(TaskRepository $taskRepository)
     {
         return $this->render(
-            'task/list.html.twig', 
+            'task/list.html.twig',
             ['tasks' => $taskRepository->findBy(['isDone' => 0])]
         );
 
@@ -32,7 +33,8 @@ class TaskController extends AbstractController
     /**
      * Display the list of tasks that have been completed
      *
-     * @param TaskRepository $taskRepository
+     * @param TaskRepository $taskRepository param
+     *
      * @return void
      */
     #[Route("/tasks/done", name: "task_done")]
@@ -49,8 +51,9 @@ class TaskController extends AbstractController
     /**
      * Manage the form & pages to create a task
      *
-     * @param Request $request
-     * @param TaskRepository $taskRepository
+     * @param Request        $request        param
+     * @param TaskRepository $taskRepository param
+     *
      * @return void
      */
     #[Route(path: "/tasks/create", name: "task_create")]
@@ -77,9 +80,10 @@ class TaskController extends AbstractController
     /**
      * Manage the form & pages to edit a task
      *
-     * @param Task $task
-     * @param Request $request
-     * @param TaskRepository $taskRepository
+     * @param Task           $task           param
+     * @param Request        $request        param
+     * @param TaskRepository $taskRepository param
+     *
      * @return void
      */
     #[Route(path: "/tasks/{id}/edit", name: "task_edit")]
@@ -98,7 +102,7 @@ class TaskController extends AbstractController
         }
 
         return $this->render(
-            'task/edit.html.twig', 
+            'task/edit.html.twig',
             [
                 'form' => $form->createView(),
                 'task' => $task,
@@ -111,8 +115,9 @@ class TaskController extends AbstractController
     /**
      * Manage the feature to change task status (done or not)
      *
-     * @param Task $task
-     * @param TaskRepository $taskRepository
+     * @param Task           $task           param
+     * @param TaskRepository $taskRepository param
+     *
      * @return void
      */
     #[Route(path: "/tasks/{id}/toggle", name: "task_toggle")]
@@ -137,8 +142,9 @@ class TaskController extends AbstractController
     /**
      * Manage the feature to delete a task
      *
-     * @param Task $task
-     * @param TaskRepository $taskRepository
+     * @param Task           $task           param
+     * @param TaskRepository $taskRepository param
+     *
      * @return void
      */
     #[Route(path: "/tasks/{id}/delete", name: "task_delete")]

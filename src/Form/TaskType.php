@@ -14,6 +14,7 @@ class TaskType extends AbstractType
             ->add('title')
             ->add('content', TextareaType::class)
         ;
+
     }
 
 

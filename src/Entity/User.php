@@ -15,6 +15,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[UniqueEntity("email")]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+
     #[ORM\Column(type: "integer")]
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: "AUTO")]
@@ -42,62 +43,74 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
+
     }
 
 
     public function getId()
     {
         return $this->id;
+
     }
 
 
     public function getUsername(): string
     {
         return $this->username;
+
     }
 
 
     public function setUsername($username)
     {
         $this->username = $username;
+
     }
 
 
     public function getSalt(): ?string
     {
         return null;
+
     }
 
 
     /**
      * @see PasswordAuthenticatedUserInterface
+     *
+     * @return string
      */
     public function getPassword(): string
     {
         return $this->password;
+
     }
 
 
     public function setPassword($password)
     {
         $this->password = $password;
+
     }
 
 
     public function getEmail()
     {
         return $this->email;
+
     }
 
 
     public function setEmail($email)
     {
         $this->email = $email;
+
     }
 
 
     public function eraseCredentials()
     {
+
     }
 
 
@@ -111,6 +124,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserIdentifier(): string
     {
         return (string) $this->username;
+
     }
 
 
@@ -120,12 +134,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getTasks(): Collection
     {
         return $this->tasks;
+
     }
 
 
     public function addTask(Task $task): self
     {
-        if (!$this->tasks->contains($task)) {
+        if ($this->tasks->contains($task) === false) {
             $this->tasks->add($task);
             $task->setAuthor($this);
         }
@@ -137,7 +152,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeTask(Task $task): self
     {
-        if ($this->tasks->removeElement($task)) {
+        if ($this->tasks->removeElement($task) === true) {
+
             // Set the owning side to null (unless already changed).
             if ($task->getAuthor() === $this) {
                 $task->setAuthor(null);
@@ -157,6 +173,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
+
         // Guarantee every user at least has ROLE_USER.
         $roles[] = 'ROLE_USER';
 
@@ -170,6 +187,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->roles = $roles;
 
         return $this;
+
     }
 
 

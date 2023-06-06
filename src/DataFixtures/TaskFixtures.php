@@ -12,7 +12,7 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
     /**
      * Load the fixtures
      *
-     * @param ObjectManager $manager
+     * @param ObjectManager $manager param
      *
      * @return void
      */
@@ -26,7 +26,7 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
             $task->setContent('This is the description of task'.$i);
 
             // The last 5 tasks have an author.
-            if($i > 5) {
+            if ($i > 5) {
                 $random = rand(0, 4);
                 $task->setAuthor($this->getReference('user'.$random));
             }
@@ -44,6 +44,7 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
         return [
             UserFixtures::class,
         ];
+
     }
 
 

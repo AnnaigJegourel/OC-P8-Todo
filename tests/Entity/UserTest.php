@@ -60,6 +60,10 @@ class UserTest extends TestCase
 
     /**
      * @depends testAddTask
+     *
+     * @param User $user param
+     *
+     * @return void
      */
     public function testRemoveTask($user)
     {

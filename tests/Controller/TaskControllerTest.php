@@ -10,8 +10,11 @@ class TaskControllerTest extends WebTestCase
 {
 
     private KernelBrowser|null $client = null;
+
     private $testUser;
+
     private $testTaskId;
+
 
     public function setUp(): void
     {
@@ -28,7 +31,7 @@ class TaskControllerTest extends WebTestCase
 
 
     public function testTodoListPageIsUpWhileLoggedIn(): void
-    {        
+    {
 
         // Simulate $testUser being logged in.
         $this->client->loginUser($this->testUser);
