@@ -14,7 +14,7 @@ Project 8: Upgrade an existing project (study project)
 
 xamppserver  
 MySQL / MariaDB  
-PHP 8.1
+PHP 8.1  
 Symfony 5.4
 
 ## Installation 🧑🏻‍🔧
