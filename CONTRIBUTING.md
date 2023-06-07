@@ -1,10 +1,10 @@
 # How to contribute
 
-✨ Thank you for taking time to contribute to this project!
-
-🪪 It is released under the [MIT License](./LICENSE).
+✨ Thank you for taking the time to contribute to this project!
 
 🤝 Everyone is encouraged to participate, as long as you engage with consideration and respect and contribute in a positive and constructive way.
+
+🪪 This project is released under the [MIT License](./LICENSE).
 
 🏁 First see the [README](./README.md) to have an overview of the project and to install it.
 
