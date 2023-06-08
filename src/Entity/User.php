@@ -25,8 +25,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank(message: "Vous devez saisir un nom d'utilisateur.")]
     private $username;
 
-    #[ORM\Column(type: "string", length: 64)]
-    private $password;
+    #[ORM\Column(type: "string", length: 64, nullable: true)]
+    private ?string $password = null;
 
     #[ORM\Column(type: "string", length: 60, unique: true)]
     #[Assert\NotBlank(message: "Vous devez saisir une adresse email.")]
@@ -80,7 +80,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *
      * @return string
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
 

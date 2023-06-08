@@ -6,7 +6,33 @@
 {% block body %}
     <div class="row">
         {{ form_start(form, {'action' : path('user_edit', {'id' : user.id})}) }}
-        {{ form_widget(form) }}
+
+        {# {{ form_widget(form) }} #}
+        <div>
+            {{ form_label(form.username) }}
+            {{ form_widget(form.username) }}
+            {{ form_errors(form.username) }}
+        </div>
+
+        <div>
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email) }}
+            {{ form_errors(form.email) }}
+        </div>
+
+        <div>
+            {{ form_label(form.roles) }}
+            {{ form_widget(form.roles) }}
+            {{ form_errors(form.roles) }}
+        </div>
+
+        <div>
+            </br>
+            <p><strong>Voulez-vous changer le mot de passe?</strong></p>
+            </br>
+            {{ form_widget(form.password) }}
+            {{ form_errors(form.password) }}
+        </div>
 
         <button type="submit" class="btn btn-success pull-right">Modifier</button>
         {{ form_end(form) }}
