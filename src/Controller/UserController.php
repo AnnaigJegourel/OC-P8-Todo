@@ -84,16 +84,28 @@ class UserController extends AbstractController
     #[Route(path: "/users/{id}/edit", name: "user_edit")]
     public function editAction(User $user, Request $request, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher)
     {
+        $previousPassword = $user->getPassword();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
+        // dd($user);
+        // dd($user->getPassword());
+        // dd($previousPassword);
 
         if ($form->isSubmitted() === true && $form->isValid() === true) {
+            // dd($user);
+            // dd($previousPassword);
             $plaintextPassword = $form->get('password')->getData();
-            $hashedPassword = $passwordHasher->hashPassword(
-                $user,
-                $plaintextPassword
-            );
-            $user->setPassword($hashedPassword);
+
+            if ($plaintextPassword !== null) {
+                $hashedPassword = $passwordHasher->hashPassword(
+                    $user,
+                    $plaintextPassword
+                );
+                $user->setPassword($hashedPassword);
+            } else {
+                // dd($user);
+                $user->setPassword($previousPassword);
+            }
 
             $roles = [$form->get('roles')->getData()];
             $user->setRoles($roles);
